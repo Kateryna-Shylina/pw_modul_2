@@ -3,8 +3,8 @@
 """
 
 import os
-import src.address_book
-import src.notes
+import address_book
+import notes
 
 # ------------
 from prompt_toolkit import prompt
@@ -81,15 +81,15 @@ def start_bot():
     filename_note_book = os.path.join(base_path, "..", "files", "save_notes.bin")
 
     try:
-        book = src.address_book.read_from_file(filename_address_book)
+        book = address_book.read_from_file(filename_address_book)
         book.find_birthday_people()
     except Exception:
-        book = src.address_book.AddressBook()
+        book = address_book.AddressBook()
 
     try:
-        note = src.notes.NoteBook.load_pickle(filename_note_book)
+        note = notes.NoteBook.load_pickle(filename_note_book)
     except Exception:
-        note = src.notes.NoteBook()
+        note = notes.NoteBook()
     
     PROGRAM_STATUS = True
 
@@ -132,7 +132,7 @@ def start_bot():
                         elif input_data == "add":
                             name = input(f"{GREEN}Enter name: {RESET}")
                             if (name):
-                                record = src.address_book.Record(name)
+                                record = address_book.Record(name)
                                 phone = input(f"{GREEN}Enter phone number (or press 'Enter' to continue): {RESET}")
                                 if phone:
                                     record.add_phone(phone)
@@ -209,7 +209,7 @@ def start_bot():
                             # Создание новой заметки и добавление её в NoteBook
                             new_tag = input(f"{GREEN}Enter tags: {RESET}")
                             new_content = str(input(f"{GREEN}Enter content: {RESET}"))
-                            note.add_note(src.notes.Note(new_content, [new_tag]))
+                            note.add_note(notes.Note(new_content, [new_tag]))
                             note.save_pickle(filename_note_book)
                         elif input_data == 'edit tag':
                             # Код для редактирования тегов заметки
